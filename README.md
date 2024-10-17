@@ -8,6 +8,7 @@ Conways Game Of Life using C++, Nodepp and Raylib
 ```
 
 ## Preview
+[preview](https://github.com/user-attachments/assets/cc8b096c-dfd8-4602-b47e-57e5ccfad5d2)
 
 ## Build & Use
 ```bash
