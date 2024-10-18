@@ -80,7 +80,8 @@ namespace rl { namespace scene {
 
                 uint pos = obj->dim.x * y + x, actived = 0;
 
-                for( int k=-1; k<=1; k++ ){ for( int l=-1; l<=1; l++ ){
+                for( int k=-1; k<=1; k++ ){ 
+                for( int l=-1; l<=1; l++ ){
                 
                     if( k==0 && l==0 ){ continue; } 
 
