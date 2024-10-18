@@ -104,7 +104,11 @@ namespace rl { namespace scene {
                     else                arr[pos]=false;
                 }
 
-            }}  memcpy( obj->list.get(), &arr, arr.size() ); 
+            }}  
+            
+            if( memcmp( obj->list.get(), &arr, arr.size() )!=0 )
+              { memcpy( obj->list.get(), &arr, arr.size() ); }
+            else { obj->state = 0; }
             
             } while(0); coDelay( obj->speed );
 
