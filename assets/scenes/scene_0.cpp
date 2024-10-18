@@ -9,7 +9,7 @@ namespace rl { namespace scene {
         struct NODE {
             array_t<bool> list;
             int size; int len;
-            ulong speed = 100;
+            ulong speed = 150;
             bool state=0;
             Vector2 dim;
         };  ptr_t<NODE> obj = new NODE();
@@ -63,9 +63,10 @@ namespace rl { namespace scene {
     
     /*─······································································─*/
 
-        self->onLoop([=]( float delta ){ if( !obj->state ){ return; }
-        [=](){ 
+        self->onLoop([=]( float delta ){ [=](){ 
         coStart
+
+            while( !obj->state ){ coNext; }
 
             do {
 
@@ -107,13 +108,12 @@ namespace rl { namespace scene {
             } while(0); coDelay( obj->speed );
 
         coStop
-        }();
-        });
+        }();});
     
     /*─······································································─*/
 
         self->onDraw([=](){ 
-            ClearBackground( BLACK );
+            ClearBackground( Color({ 22, 22, 22 }) );
             Vector2 pos, mouse = Normalize( GetMousePosition() );
             
             for( int x=0; x<obj->list.size(); x++ ){
