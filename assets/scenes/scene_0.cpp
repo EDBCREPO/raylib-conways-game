@@ -9,14 +9,14 @@ namespace rl { namespace scene {
         struct NODE {
             array_t<bool> list;
             int size; int len;
-            ulong speed = 150;
+            ulong speed = 80;
             bool state=0;
             Vector2 dim;
         };  ptr_t<NODE> obj = new NODE();
     
     /*─······································································─*/
 
-        obj->len  = 10; obj->size = GetRenderWidth()*GetRenderHeight()/obj->len;
+        obj->len  = 8; obj->size = GetRenderWidth()*GetRenderHeight()/obj->len;
         obj->list = array_t<bool>( obj->size, 0 ); obj->dim = { 
             type::cast<float>( GetRenderWidth() /obj->len ),
             type::cast<float>( GetRenderHeight()/obj->len )
@@ -134,7 +134,7 @@ namespace rl { namespace scene {
                 DrawRectangleLines( mouse.x, mouse.y, obj->len, obj->len, GREEN );
             }
 
-            DONE:; DrawFPS( 10, 10 );
+            DONE:; // DrawFPS( 10, 10 );
         });
     
     }

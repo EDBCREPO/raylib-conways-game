@@ -7,7 +7,7 @@ using namespace nodepp;
 
 void onMain() {
 
-    rl::Init( { 800, 600 }, 60, "Conway's Game of Life" );
+    rl::Init( 800, 600, 60, "Conway's Game of Life" );
 
     rl::AppendScene( rl::scene::scene_0 );
 
