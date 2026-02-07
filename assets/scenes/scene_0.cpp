@@ -9,14 +9,14 @@ namespace rl { namespace scene {
         struct NODE {
             array_t<bool> list;
             int size; int len;
-            ulong speed = 100;
+            ulong speed = 80;
             bool state=0;
             Vector2 dim;
         };  ptr_t<NODE> obj = new NODE();
     
     /*─······································································─*/
 
-        obj->len  = 10; obj->size = GetRenderWidth()*GetRenderHeight()/obj->len;
+        obj->len  = 8; obj->size = GetRenderWidth()*GetRenderHeight()/obj->len;
         obj->list = array_t<bool>( obj->size, 0 ); obj->dim = { 
             type::cast<float>( GetRenderWidth() /obj->len ),
             type::cast<float>( GetRenderHeight()/obj->len )
@@ -63,9 +63,10 @@ namespace rl { namespace scene {
     
     /*─······································································─*/
 
-        self->onLoop([=]( float delta ){ if( !obj->state ){ return; }
-        [=](){ 
+        self->onLoop([=]( float delta ){ [=](){ 
         coStart
+
+            while( !obj->state ){ coNext; }
 
             do {
 
@@ -79,7 +80,8 @@ namespace rl { namespace scene {
 
                 uint pos = obj->dim.x * y + x, actived = 0;
 
-                for( int k=-1; k<=1; k++ ){ for( int l=-1; l<=1; l++ ){
+                for( int k=-1; k<=1; k++ ){ 
+                for( int l=-1; l<=1; l++ ){
                 
                     if( k==0 && l==0 ){ continue; } 
 
@@ -102,18 +104,21 @@ namespace rl { namespace scene {
                     else                arr[pos]=false;
                 }
 
-            }}  memcpy( obj->list.get(), &arr, arr.size() ); 
+            }}  
+            
+            if( memcmp( obj->list.get(), &arr, arr.size() )!=0 )
+              { memcpy( obj->list.get(), &arr, arr.size() ); }
+            else { obj->state = 0; }
             
             } while(0); coDelay( obj->speed );
 
         coStop
-        }();
-        });
+        }();});
     
     /*─······································································─*/
 
         self->onDraw([=](){ 
-            ClearBackground( BLACK );
+            ClearBackground( Color({ 22, 22, 22 }) );
             Vector2 pos, mouse = Normalize( GetMousePosition() );
             
             for( int x=0; x<obj->list.size(); x++ ){
@@ -129,7 +134,7 @@ namespace rl { namespace scene {
                 DrawRectangleLines( mouse.x, mouse.y, obj->len, obj->len, GREEN );
             }
 
-            DONE:; DrawFPS( 10, 10 );
+            DONE:; // DrawFPS( 10, 10 );
         });
     
     }
